@@ -11,8 +11,9 @@ from random import randint
 # player class
 
 class Player(Sprite):
-    def __init__(self):
+    def __init__(self, game):
         Sprite.__init__(self)
+        self.game = game
         self.image = pg.Surface((50,50))
         self.image.fill(RED)
         self.rect = self.image.get_rect()
@@ -33,6 +34,11 @@ class Player(Sprite):
             self.acc.y = PLAYER_ACC
         if keystate[pg.K_d]:
             self.acc.x = PLAYER_ACC
+        if keystate[pg.K_k]:
+            PAUSED = True
+
+    def jump(self):
+        hits = pg.sprite.spritecollide(self, self.game.platforms, False)
     # ...
     def inbounds(self):
         if self.rect.x > WIDTH - 50:
@@ -40,10 +46,16 @@ class Player(Sprite):
             self.vel.x = 0
             print("i am off the right side of the screen...")
         if self.rect.x < 0:
+            self.pos.x = 25
+            self.vel.x = 0
             print("i am off the left side of the screen...")
-        if self.rect.y > HEIGHT:
+        if self.rect.y > HEIGHT - 50:
+            self.pos.y = HEIGHT - 25
+            self.vel.y = 0
             print("i am off the bottom of the screen")
         if self.rect.y < 0:
+            self.pos.y = 25
+            self.vel.y = 0
             print("i am off the top of the screen...")
 
     def update(self):

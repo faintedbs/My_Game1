@@ -15,7 +15,8 @@ BLUE = (50,50,255)
 RED = (255,50,50)
 GREEN = (170,196,120)
 
-SCORE = 1
+SCORE = 0
 
 RUNNING = True
+PAUSED = False
 
